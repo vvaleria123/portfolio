@@ -9,15 +9,14 @@
 <body>
 
   <!-- NAV -->
-  <nav>
-    <a href="#about">About</a>
-    <a href="#education-experience">Education & Experience</a>
-    <a href="#technical-skills">Skills</a>
-    <a href="#languages">Languages</a>
-    <a href="#projects">Projects</a>
-    <a href="#goals">Goals</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<nav>
+  <a href="#about">About</a>
+  <a href="#skills">Skills</a>
+  <a href="#projects">Projects</a>
+  <a href="#drawings">Drawings</a>
+  <a href="#photography">Photography</a>
+  <a href="#contact">Contact</a>
+</nav>
 
   <!-- HEADER -->
   <header class="fade-in">
@@ -138,45 +137,62 @@
   </div>
 </div>
 
-  <section id="hobbies" class="section hidden">
+<section id="hobbies" class="section hidden">
   <h2>Hobbies & Artwork</h2>
 
-  <div class="hobbies-tabs">
-    <!-- Tab buttons -->
-    <div class="tab-buttons">
-      <button class="tab-btn active" data-tab="drawings">Drawings</button>
-      <button class="tab-btn" data-tab="other">Other Hobbies</button>
-    </div>
+  <div class="tab-buttons">
+    <button class="tab-btn active" data-tab="drawings">Drawings</button>
+    <button class="tab-btn" data-tab="photography">Photography</button>
+    <button class="tab-btn" data-tab="other">Other Hobbies</button>
+  </div>
 
-    <!-- Tab content -->
-    <div class="tab-content active" id="drawings">
-      <div class="gallery">
-        <img src="images/1.jpg" alt="Drawing 1">
-        <img src="images/2.jpg" alt="Drawing 2">
-        <img src="images/3.jpg" alt="Drawing 3">
-        <img src="images/4.jpg" alt="Drawing 4">
-        <img src="images/5.jpg" alt="Drawing 5">
-        <img src="images/6.jpg" alt="Drawing 6">
-        <img src="images/7.jpg" alt="Drawing 7">
-        <img src="images/8.jpg" alt="Drawing 8">
-        <img src="images/9.jpg" alt="Drawing 9">
-        <img src="images/10.jpg" alt="Drawing 10">
-        <img src="images/11.jpg" alt="Drawing 11">
-        <img src="images/12.jpg" alt="Drawing 12">
-        <img src="images/13.jpg" alt="Drawing 13">
-        <img src="images/14.jpg" alt="Drawing 14">
-        
-      </div>
+  <!-- Tab content: order matches buttons -->
+  <div class="tab-content active" id="drawings">
+    <div class="gallery">
+      <img src="images/1.jpg" alt="Drawing 1">
+      <img src="images/2.jpg" alt="Drawing 2">
+      <img src="images/3.jpg" alt="Drawing 3">
+      <img src="images/4.jpg" alt="Drawing 4">
+      <img src="images/5.jpg" alt="Drawing 5">
+      <img src="images/6.jpg" alt="Drawing 6">
+      <img src="images/7.jpg" alt="Drawing 7">
+      <img src="images/8.jpg" alt="Drawing 8">
+      <img src="images/9.jpg" alt="Drawing 9">
+      <img src="images/10.jpg" alt="Drawing 10">
+      <img src="images/11.jpg" alt="Drawing 11">
+      <img src="images/12.jpg" alt="Drawing 12">
+      <img src="images/13.jpg" alt="Drawing 13">
+      <img src="images/14.jpg" alt="Drawing 14">
     </div>
+  </div>
 
-    <div class="tab-content" id="other">
-      <ul>
-        <li>Reading scientific and engineering books</li>
-        <li>Exploring new technologies and programming tools</li>
-        <li>Sketching and digital art</li>
-        <li>Travel and cultural exploration</li>
-      </ul>
+  <div class="tab-content" id="photography">
+    <div class="gallery">
+      <img src="images/photo1.jpg" alt="Photography 1">
+      <img src="images/photo2.jpg" alt="Photography 2">
+      <img src="images/photo3.jpg" alt="Photography 3">
+      <img src="images/photo4.jpg" alt="Photography 4">
     </div>
+  </div>
+
+  <div class="tab-content" id="other">
+    <ul class="hobby-list">
+      <li>
+        <strong>Drawing & Sketching</strong> – Creative expression through
+        traditional and digital illustrations.
+      </li>
+      <li>
+        <strong>Photography</strong> – Capturing architecture, landscapes,
+        and natural lighting with focus on composition and perspective.
+      </li>
+      <li>
+        <strong>Technology Exploration</strong> – Learning new programming
+        tools and control systems.
+      </li>
+      <li>
+        <strong>Reading</strong> – Engineering, robotics, and scientific literature.
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -185,6 +201,7 @@
     <h2>Goals & Motivation</h2>
     <p>I aim to grow as a software and robotics engineer by combining my academic knowledge with practical experience. I am particularly interested in projects that integrate automation, control systems, and data-driven technologies.</p>
   </section>
+
 
   <!-- CONTACT -->
   <section id="contact" class="section hidden">
