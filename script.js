@@ -1,131 +1,128 @@
-const sections = document.querySelectorAll(".hidden");
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-      observer.unobserve(entry.target); // animate once
-    }
-  });
-}, { threshold: 0.2 });
-
-sections.forEach(section => {
-  observer.observe(section);
-
-  // optional: stagger child animations
-  const children = section.querySelectorAll('p, h2, h3, img, span'); 
-  children.forEach((child, index) => {
-    child.style.transitionDelay = `${index * 0.15}s`;
-  });
-});
-// Tab functionality for Hobbies & Artwork (adds hash-on-load behavior)
-const tabButtons = document.querySelectorAll(".tab-btn");
-const tabContents = document.querySelectorAll(".tab-content");
-
-function activateHobbyTab(target, scroll = true) {
-  if (!target) return;
-  console.log('activateHobbyTab called for:', target, 'scroll:', scroll);
-  // activate button
-  const btn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
-  if (btn) {
-    tabButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  }
-
-  // show content
-  tabContents.forEach(content => {
-    content.classList.remove('active');
-    if (content.id === target) content.classList.add('active');
-  });
-
-  // optionally scroll to the hobbies section
-  if (scroll) {
-    const hobbiesSection = document.getElementById('hobbies');
-    if (hobbiesSection) hobbiesSection.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-
-tabButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.tab;
-    activateHobbyTab(target, false);
-  });
-});
-
-// ensure navigation links for drawings/photography/other open the correct tab
-const navLinks = document.querySelectorAll('nav a');
-navLinks.forEach(link => {
-  const href = link.getAttribute('href');
-  if (href && href.startsWith('#')) {
-    const target = href.slice(1);
-    // hobby tabs
-    if (['drawings','photography','other'].includes(target)) {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        // activate the tab and scroll to the hobbies container
-        activateHobbyTab(target, true);
-        try { history.replaceState(null, '', `#${target}`); } catch (err) {}
-      });
-    }
-    // skills anchor (support #skills and #technical-skills)
-    if (['skills','technical-skills'].includes(target)) {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        try { history.replaceState(null, '', '#technical-skills'); } catch (err) {}
-        setTimeout(() => {
-          const skillsEl = document.getElementById('technical-skills');
-          if (skillsEl) skillsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      });
-    }
-  }
-});
-
-// on DOMContentLoaded, check URL hash and activate matching hobby tab if present
-document.addEventListener('DOMContentLoaded', () => {
-  const hash = (location.hash || '').replace('#', '');
-  if (['drawings','photography','other'].includes(hash)) {
-    // activate tab and scroll
-    activateHobbyTab(hash, true);
-  }
-});
-
-// respond to later hash changes (e.g., user pastes #photography or uses browser history)
-window.addEventListener('hashchange', () => {
-  const h = (location.hash || '').replace('#', '');
-  if (['drawings','photography','other'].includes(h)) {
-    activateHobbyTab(h, false);
-    // scroll to the visible tab content
-    setTimeout(() => {
-      const el = document.getElementById(h);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 30);
-  }
-});
-
-// LIGHTBOX (fixed version)
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* ===============================
+     SCROLL ANIMATION
+  =============================== */
+
+  const sections = document.querySelectorAll(".hidden");
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("show");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => {
+    observer.observe(section);
+
+    const children = section.querySelectorAll("p, h2, h3, img, span");
+    children.forEach((child, index) => {
+      child.style.transitionDelay = `${index * 0.15}s`;
+    });
+  });
+
+
+  /* ===============================
+     HOBBIES TABS
+  =============================== */
+
+  const tabButtons = document.querySelectorAll(".tab-btn");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  function activateHobbyTab(target) {
+    if (!target) return;
+
+    // activate button
+    tabButtons.forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === target);
+    });
+
+    // show correct content
+    tabContents.forEach(content => {
+      content.classList.toggle("active", content.id === target);
+    });
+
+    // scroll to hobbies section
+    const hobbiesSection = document.getElementById("hobbies");
+    if (hobbiesSection) {
+      hobbiesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  // tab button clicks
+  tabButtons.forEach(btn => {
+    btn.addEventListener("click", function () {
+      const target = this.dataset.tab;
+      activateHobbyTab(target);
+    });
+  });
+
+
+  /* ===============================
+     NAVIGATION LINKS FIX
+  =============================== */
+
+  const navLinks = document.querySelectorAll("nav a");
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute("href");
+
+    if (!href || !href.startsWith("#")) return;
+
+    const target = href.substring(1);
+
+    if (["drawings", "photography", "other"].includes(target)) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        activateHobbyTab(target);
+        history.replaceState(null, "", `#${target}`);
+      });
+    }
+  });
+
+
+  /* ===============================
+     HASH ON PAGE LOAD
+  =============================== */
+
+  const hash = window.location.hash.replace("#", "");
+  if (["drawings", "photography", "other"].includes(hash)) {
+    activateHobbyTab(hash);
+  }
+
+
+  /* ===============================
+     LIGHTBOX
+  =============================== */
 
   const images = document.querySelectorAll(".gallery img");
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const closeBtn = document.querySelector(".close");
 
-  images.forEach(img => {
-    img.addEventListener("click", function () {
-      lightbox.style.display = "flex";
-      lightboxImg.src = this.src;
+  if (lightbox && lightboxImg) {
+
+    images.forEach(img => {
+      img.addEventListener("click", function () {
+        lightbox.style.display = "flex";
+        lightboxImg.src = this.src;
+      });
     });
-  });
 
-  closeBtn.addEventListener("click", function () {
-    lightbox.style.display = "none";
-  });
-
-  lightbox.addEventListener("click", function (e) {
-    if (e.target !== lightboxImg) {
-      lightbox.style.display = "none";
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        lightbox.style.display = "none";
+      });
     }
-  });
+
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+      }
+    });
+  }
 
 });
