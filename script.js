@@ -58,19 +58,28 @@ navLinks.forEach(link => {
   const href = link.getAttribute('href');
   if (href && href.startsWith('#')) {
     const target = href.slice(1);
+    // hobby tabs
     if (['drawings','photography','other'].includes(target)) {
       link.addEventListener('click', e => {
         e.preventDefault();
-        // activate tab (don't auto-scroll to hobbies wrapper yet)
         activateHobbyTab(target, false);
-        // update the URL hash without jumping
         try { history.replaceState(null, '', `#${target}`); } catch (err) {}
-        // give the browser a bit more time to render the now-visible content, then scroll to it
         setTimeout(() => {
           console.log('nav link click scroll to:', target);
           const contentEl = document.getElementById(target);
           if (contentEl) contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 200);
+      });
+    }
+    // skills anchor (support #skills and #technical-skills)
+    if (['skills','technical-skills'].includes(target)) {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        try { history.replaceState(null, '', '#technical-skills'); } catch (err) {}
+        setTimeout(() => {
+          const skillsEl = document.getElementById('technical-skills');
+          if (skillsEl) skillsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
       });
     }
   }
