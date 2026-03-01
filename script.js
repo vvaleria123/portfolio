@@ -83,6 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// respond to later hash changes (e.g., user pastes #photography or uses browser history)
+window.addEventListener('hashchange', () => {
+  const h = (location.hash || '').replace('#', '');
+  if (['drawings','photography','other'].includes(h)) {
+    activateHobbyTab(h, false);
+    // scroll to the visible tab content
+    setTimeout(() => {
+      const el = document.getElementById(h);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 30);
+  }
+});
+
 // LIGHTBOX (fixed version)
 document.addEventListener("DOMContentLoaded", function () {
 
