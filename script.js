@@ -36,6 +36,28 @@ tabButtons.forEach(btn => {
   });
 });
 
+// ensure navigation links for drawings/photography/other open the correct tab
+const navLinks = document.querySelectorAll('nav a');
+navLinks.forEach(link => {
+  const href = link.getAttribute('href');
+  if (href && href.startsWith('#')) {
+    const target = href.slice(1);
+    if (['drawings','photography','other'].includes(target)) {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        // activate the corresponding tab button
+        const btn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
+        if (btn) btn.click();
+        // scroll to the hobbies section
+        const hobbiesSection = document.getElementById('hobbies');
+        if (hobbiesSection) {
+          hobbiesSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  }
+});
+
 // LIGHTBOX (fixed version)
 document.addEventListener("DOMContentLoaded", function () {
 
