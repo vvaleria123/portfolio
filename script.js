@@ -24,6 +24,7 @@ const tabContents = document.querySelectorAll(".tab-content");
 
 function activateHobbyTab(target, scroll = true) {
   if (!target) return;
+  console.log('activateHobbyTab called for:', target, 'scroll:', scroll);
   // activate button
   const btn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
   if (btn) {
@@ -64,11 +65,12 @@ navLinks.forEach(link => {
         activateHobbyTab(target, false);
         // update the URL hash without jumping
         try { history.replaceState(null, '', `#${target}`); } catch (err) {}
-        // give the browser a moment to render the now-visible content, then scroll to it
+        // give the browser a bit more time to render the now-visible content, then scroll to it
         setTimeout(() => {
+          console.log('nav link click scroll to:', target);
           const contentEl = document.getElementById(target);
           if (contentEl) contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 40);
+        }, 200);
       });
     }
   }
