@@ -62,13 +62,9 @@ navLinks.forEach(link => {
     if (['drawings','photography','other'].includes(target)) {
       link.addEventListener('click', e => {
         e.preventDefault();
-        activateHobbyTab(target, false);
+        // activate the tab and scroll to the hobbies container
+        activateHobbyTab(target, true);
         try { history.replaceState(null, '', `#${target}`); } catch (err) {}
-        setTimeout(() => {
-          console.log('nav link click scroll to:', target);
-          const contentEl = document.getElementById(target);
-          if (contentEl) contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 200);
       });
     }
     // skills anchor (support #skills and #technical-skills)
