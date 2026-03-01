@@ -60,7 +60,15 @@ navLinks.forEach(link => {
     if (['drawings','photography','other'].includes(target)) {
       link.addEventListener('click', e => {
         e.preventDefault();
-        activateHobbyTab(target, true);
+        // activate tab (don't auto-scroll to hobbies wrapper yet)
+        activateHobbyTab(target, false);
+        // update the URL hash without jumping
+        try { history.replaceState(null, '', `#${target}`); } catch (err) {}
+        // give the browser a moment to render the now-visible content, then scroll to it
+        setTimeout(() => {
+          const contentEl = document.getElementById(target);
+          if (contentEl) contentEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 40);
       });
     }
   }
