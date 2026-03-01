@@ -1,0 +1,16 @@
+# ignore VSCode workspace settings and caches
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Python caches
+__pycache__/
+*.pyc
+
+# node modules
+node_modules/
+
+# logs
+*.log
