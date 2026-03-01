@@ -45,10 +45,15 @@ document.addEventListener("DOMContentLoaded", function () {
       content.classList.toggle("active", content.id === target);
     });
 
-    // scroll to hobbies section
-    const hobbiesSection = document.getElementById("hobbies");
-    if (hobbiesSection) {
-      hobbiesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    // scroll to specific hobby content if available (gives better positioning than section top)
+    const contentEl = document.getElementById(target);
+    if (contentEl) {
+      contentEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      const hobbiesSection = document.getElementById("hobbies");
+      if (hobbiesSection) {
+        hobbiesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   }
 
