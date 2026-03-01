@@ -90,6 +90,17 @@ document.addEventListener("DOMContentLoaded", function () {
         history.replaceState(null, "", `#${target}`);
       });
     }
+    // single Hobbies menu item
+    if (target === "hobbies") {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        // determine currently active tab, or default to drawings
+        const activeBtn = document.querySelector('.tab-btn.active');
+        const hobbyTarget = activeBtn ? activeBtn.dataset.tab : 'drawings';
+        activateHobbyTab(hobbyTarget);
+        history.replaceState(null, "", '#hobbies');
+      });
+    }
   });
 
 
@@ -100,6 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const hash = window.location.hash.replace("#", "");
   if (["drawings", "photography", "other"].includes(hash)) {
     activateHobbyTab(hash);
+  } else if (hash === "hobbies") {
+    // open hobbies section with default tab (drawings)
+    activateHobbyTab('drawings');
   }
 
 
