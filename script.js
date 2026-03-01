@@ -45,14 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
       content.classList.toggle("active", content.id === target);
     });
 
-    // scroll to specific hobby content if available (gives better positioning than section top)
+    // scroll after browser has applied visibility changes
     const contentEl = document.getElementById(target);
     if (contentEl) {
-      contentEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      requestAnimationFrame(() => {
+        contentEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
     } else {
       const hobbiesSection = document.getElementById("hobbies");
       if (hobbiesSection) {
-        hobbiesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        requestAnimationFrame(() => {
+          hobbiesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
       }
     }
   }
