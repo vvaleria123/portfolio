@@ -18,21 +18,36 @@ sections.forEach(section => {
     child.style.transitionDelay = `${index * 0.15}s`;
   });
 });
-// Tab functionality for Hobbies & Artwork
+// Tab functionality for Hobbies & Artwork (adds hash-on-load behavior)
 const tabButtons = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
 
+function activateHobbyTab(target, scroll = true) {
+  if (!target) return;
+  // activate button
+  const btn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
+  if (btn) {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // show content
+  tabContents.forEach(content => {
+    content.classList.remove('active');
+    if (content.id === target) content.classList.add('active');
+  });
+
+  // optionally scroll to the hobbies section
+  if (scroll) {
+    const hobbiesSection = document.getElementById('hobbies');
+    if (hobbiesSection) hobbiesSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
 tabButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
+  btn.addEventListener('click', () => {
     const target = btn.dataset.tab;
-
-    tabButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    tabContents.forEach(content => {
-      content.classList.remove("active");
-      if(content.id === target) content.classList.add("active");
-    });
+    activateHobbyTab(target, false);
   });
 });
 
@@ -45,16 +60,18 @@ navLinks.forEach(link => {
     if (['drawings','photography','other'].includes(target)) {
       link.addEventListener('click', e => {
         e.preventDefault();
-        // activate the corresponding tab button
-        const btn = document.querySelector(`.tab-btn[data-tab="${target}"]`);
-        if (btn) btn.click();
-        // scroll to the hobbies section
-        const hobbiesSection = document.getElementById('hobbies');
-        if (hobbiesSection) {
-          hobbiesSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        activateHobbyTab(target, true);
       });
     }
+  }
+});
+
+// on DOMContentLoaded, check URL hash and activate matching hobby tab if present
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = (location.hash || '').replace('#', '');
+  if (['drawings','photography','other'].includes(hash)) {
+    // activate tab and scroll
+    activateHobbyTab(hash, true);
   }
 });
 
